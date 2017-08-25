@@ -4,20 +4,27 @@ import socket
 import time
 import sys
 
-def main():
-	print("[+] Listening...")
-	server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+def recieveMessage(conn):
+	while True:
+		data = conn.recv(1024).decode()
+		print(data)		
 
+
+def main():
+	server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	try:
-		server.bind(('localhost', 80))
+		server.bind(('localhost', 6677))
 	except socket.error as msg:
 		print("Bind was a failure, now quiting...")
 		sys.exit()
 
-	server.listen(1)
-	
-	conn, addr = server.accept()
-	print("Connected with", addr)
+	server.listen(2)
+	print("[+] Server is Listening")
+	while True:	
+		conn, addr = server.accept()
+		print("Connected with", addr)
+		recieveMessage(conn)
+
 	server.shutdown(socket.SHUT_RDWR)
 	server.close()
 

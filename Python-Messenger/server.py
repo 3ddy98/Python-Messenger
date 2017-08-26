@@ -3,6 +3,9 @@
 import socket
 import time
 import sys
+import multiprocessing as mp
+
+mp.allow_connection_pickling()
 
 def recieveMessage(conn):
 	while True:
@@ -12,8 +15,10 @@ def recieveMessage(conn):
 
 def main():
 	server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR,1)
+
 	try:
-		server.bind(('localhost', 6677))
+		server.bind(('', 6677))
 	except socket.error as msg:
 		print("Bind was a failure, now quiting...")
 		sys.exit()
@@ -23,7 +28,8 @@ def main():
 	while True:	
 		conn, addr = server.accept()
 		print("Connected with", addr)
-		recieveMessage(conn)
+		clientHandling = mp.Process(target = recieveMessage, args=(conn,))
+		clientHandling.start()
 
 	server.shutdown(socket.SHUT_RDWR)
 	server.close()

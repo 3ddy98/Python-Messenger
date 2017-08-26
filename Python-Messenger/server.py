@@ -10,7 +10,8 @@ mp.allow_connection_pickling()
 def recieveMessage(conn):
 	while True:
 		data = conn.recv(1024).decode()
-		print(data)		
+		if(data !=''):
+			print(data)		
 
 
 def main():

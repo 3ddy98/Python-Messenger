@@ -22,11 +22,11 @@ def sendMessages(conn, server, username):
 
 
 def recieveMessages(conn):
-		data = conn.recv(1024).decode()
-		if not data:
-			pass
-		else:
-			print(data)
+	data = conn.recv(1024).decode()
+	if not data:
+		pass
+	else:
+		print(data)
 
 def main():
 	server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -45,6 +45,8 @@ def main():
 	print("[+] Server is Listening")
 	conn, addr = server.accept()
 	print("Connected with", addr)
+	print("Type '/dis' to disconnect from ", addr)
+        
 	while True:
 		recieveMessages(conn)
 		sendMessages(conn, server, username)

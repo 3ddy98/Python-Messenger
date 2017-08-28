@@ -26,10 +26,11 @@ def sendMessages(username, client):
 	else:
 		client.send((username + " >> " + message).encode()) # This encodes the string into binary data to be transmitted
 def connectToServer(client):
+	HOST = input("Please input Host IP: ")
 	while True:
 		print("[+] Connecting...")
 		try:
-			client.connect(('192.168.1.10', 6677))
+			client.connect((HOST, 6677))
 			break
 		except: 
 			print("Connection Failed, Retrying...")
